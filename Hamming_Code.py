@@ -8,20 +8,20 @@ def calc_parity_bit(data, positions, length):
 def encode_hamming(data_bits):
 
     data_len = len(data_bits)
-    r = 0
-    while (2**r) < (data_len + r + 1):
-        r += 1
+    p = 0
+    while (2**p) < (data_len + p + 1):
+        p += 1
 
     hamming_code = []
     j = 0
-    for i in range(1, data_len + r + 1):
+    for i in range(1, data_len + p + 1):
         if (i & (i - 1)) == 0:
             hamming_code.append(0)
         else:
             hamming_code.append(int(data_bits[j]))
             j += 1
     
-    for i in range(r):
+    for i in range(p):
         parity_bit_pos = 2**i - 1
         parity_value = \
         calc_parity_bit(hamming_code, 2**i, len(hamming_code))
@@ -41,7 +41,7 @@ def decode_hamming(received_code):
 
     if error_pos != 0:
 
-        print(f"Ошибка на позиции {error_pos}. Исправляем ошибку.")
+        print(f"Ошибка на {error_pos}. Исправляем ошибку.")
         received_code[error_pos - 1] ^= 1
     
     data_bits = []
